@@ -18,7 +18,7 @@ class Ps
     end
 
     if order = opts[:order]
-      list.sort_by! do |process|
+      list = list.sort_by do |process|
         process[order.to_sym]
       end
       list.reverse!
@@ -38,11 +38,11 @@ class Ps
   private
 
   def self.proc_table_to_hash(proc_table, full=false)
-    info = Hash[*proc_table.members.zip(proc_table.values).flatten]
+    info = Hash[*proc_table.members.map { |m| m.to_sym }.zip(proc_table.values).flatten]
 
     unless full
-      info.keep_if do |key, value|
-        [:pid, :rss, :vsize, :comm, :cmdline, :state].include?(key)
+      info.delete_if do |key, value|
+        ![:pid, :rss, :vsize, :comm, :cmdline, :state].include?(key)
       end
     end
 
