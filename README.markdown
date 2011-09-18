@@ -203,3 +203,7 @@ is set to 404.
 Test suite for the app can be run by following command:
 
     rake tests
+
+## Authors
+
+Marcin Kulik (@sickill)
